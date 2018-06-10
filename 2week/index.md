@@ -70,7 +70,7 @@ Vue.component('컴포넌트 이름',{
 
 
 
-ex)
+[exam1)](https://cho-i.github.io/Vue/2week/exam1.html)
 
 ```html
 <!DOCTYPE html>
