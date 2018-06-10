@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>Vue Component</title>
+    </head>
+    <body>
+        <div id="app">
+            <child-component></child-component>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+        <script>
+        //1. 먼저 이벤트 버스로 활용할 새 인스턴스를 1개 생성하고 evnetBus라는 변수에 참조. 이제 eventBus 변수로 새 인스턴스의 속성과 메서드에 접근할 수 있음.
+        var eventBus = new Vue();
+
+        Vue.component('child-component', {
+            //2. 하위 컴포넌트에는 template속성과 methods 속성을 정의. template 속성에는 '하위 컴포넌트 영역입니다.'라는 텍스트와 show 버튼을 추가. methods 속성에는 showLog() 메서드를 정의하고, 메서드 안에는 eventBus.$emit()을 선언하여 triggerEventBus라는 이벤트를 발생하는 로직을 추가. 이 이벤트는 발생할 때 수신하는 쪽에 인자 값으로 100이라는 숫자를 함께 전달.
+            template: '<div>하위 컴포넌트 영역입니다.<button v-on:click="showLog">show</button></div>',
+            methods: {
+                showLog: function() {
+                    eventBus.$emit('triggerEventBus', 100);
+                }
+            }
+        });
+
+        var app = new Vue({
+            el: '#app',
+            created: function() {
+                //3. 상위 컴포넌트의 created 라이프 사이클 훅에 eventBus.$on()으로 이벤트를 받는 로직을 선언. 발생한 이벤트 triggerEventBus를 수신할 때 앞에서 전달된 인자 값 100이 콘솔에 출력.
+                eventBus.$on('triggerEventBus', function(value){
+                    console.log("이벤트를 전달 받음. 전달 받은 값 : ", value);
+                });
+            }
+        });
+        </script>
+    </body>
+</html>
