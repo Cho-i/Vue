@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>Vue</title>
+    </head>
+    <body>
+        <div id="app">
+            <test-component></test-component>
+            <test-component></test-component>
+            <test-component></test-component>
+        </div>
+        <template id="templateId">
+            <div>{{text}}</div>
+        </template>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+        <script>
+            Vue.component('test-component',{
+            	template:'#templateId',
+                data:function () {
+                    return{
+                    	text:'이곳에 컴포넌트의 마크업을 진행!'
+                    }
+				}
+            });
+            var app = new Vue({
+                el:'#app'
+            });
+            /*
+            template 기능을 이용하면 복잡한 마크업의 컴포넌트를 생성할 수 있음.
+            사용법은 위 예제와 같이 template:'#templateId' 형태로 html의 template 태그의 id와 template 속성의 값을 매핑 시켜줌.
+            템플릿 내부는 기존 배워왔던 Vue.js의 문법과 동일.
+             */
+        </script>
+    </body>
+</html>

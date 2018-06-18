@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>Vue</title>
+    </head>
+    <body>
+        <div id="app">
+            <test-component></test-component>
+        </div>
+        <div id="otherApp">
+            <test-component></test-component>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+        <script>
+            var testComponent={
+				template:'<p>테스트 컴포넌트 생성</p>'
+            }
+            new Vue({
+                el:'#app',
+                components:{
+                	'test-component':testComponent
+                }
+            });
+            new Vue({
+                el:'#otherApp'
+            });
+        </script>
+    </body>
+</html>

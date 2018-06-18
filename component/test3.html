@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>Vue</title>
+    </head>
+    <body>
+        <div id="app">
+            <test-component></test-component>
+            <test-component></test-component>
+            <test-component></test-component>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+        <script>
+            Vue.component('test-component',{
+            	template:'<button @click="increment">{{count}}</button>',
+                data:function () {
+                    return{
+                    	count:0
+                    }
+				},
+                methods:{
+					increment:function () {
+                        this.count += 1
+					}
+                }
+            });
+            var app = new Vue({
+                el:'#app'
+            });
+            /*
+            컴포넌트의 데이터는 data에서 관리. 여기서 중요한 점은 이 data 속성은 이전처럼 객체가 아닌 함수 여야 한다는 것.
+            이는 컴포넌트마다 각각 자신의 상태를 가질 수 있게 하기 위함. 버튼을 클릭하면 increment 메서드가 실행되며 해당 버튼의 count 상태를 업데이트.
+             */
+        </script>
+    </body>
+</html>

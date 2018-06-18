@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>Vue</title>
+    </head>
+    <body>
+        <div id="app">
+            <test-component id="abc" :age="30"></test-component>
+            <p>콘솔 경고 확인</p>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+        <script>
+            Vue.component('test-component',{
+            	props:{
+            		id:{
+            			type:String,
+                        required:true
+                    },
+                    name:{
+            			type:String,
+                        default:'noname'
+                    },
+                    age:{
+            			type:Number,
+                        validator:function (v) {
+                            return v >= 50;
+						}
+                    }
+                },
+            	template:'<p>name:{{name}}, age:{{age}}</p>'
+            });
+            new Vue({
+                el:'#app'
+            });
+            /*
+            props 프로퍼티로 전달받을 것으로 예상되는 데이터를 정의. 타입 체크는 필수는 아니지만 원활한 개발을 위해 사용권장.
+            그리고 props를 받아오는 로직은 상위 컴포넌트에서 넘겨줌.
+            type은 instanceof를 사용하여 클래스 타입을 체크. [String, Number]처럼 배열을 사용하면 여러가지 타입을 설정도 가능.
+            required는 필수 값 여부를 설정하고 name props의 default는 값이 들어오지 않을 경우 기본으로 사용되는 값을 의미.
+            예제 결과로 noname이 표현된 이유.
+            validator는 age값을 받아와 특정 조건을 만족하는지 안 하는지 체크하고 false를 반환한다면 경고를 나타내 줌.
+            예제에서는 30이라는 값이 들어왔지만 validator의 조건을 만족하지 못하여 콘솔에 경고를 표시해주고 있음.
+             */
+        </script>
+    </body>
+</html>

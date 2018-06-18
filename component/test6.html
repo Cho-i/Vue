@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>Vue</title>
+    </head>
+    <body>
+        <div id="app">
+            <parent></parent>
+        </div>
+        <template id="parent">
+            <child @eat="parentEat" :parent-calorie="calorie"></child>
+        </template>
+        <template id="child">
+            <div>
+                <p>parent 먹은 칼로리 : {{parentCalorie}}</p>
+                <p>child 먹은 칼로리 : {{calorie}}</p>
+                <button @click="childEat">밥!!</button>
+            </div>
+        </template>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+        <script>
+            Vue.component('parent',{
+            	template:'#parent',
+                data:function () {
+                    return{
+						calorie:0
+                    }
+				},
+                methods:{
+            		parentEat:function () {
+                        this.calorie += 800;
+					}
+                }
+            });
+            Vue.component('child',{
+            	template:'#child',
+                props:['parentCalorie'],
+                data:function () {
+                    return{
+                    	calorie:0
+                    }
+				},
+                methods:{
+            		childEat:function () {
+                        this.calorie += 500;
+                        this.$emit('eat');
+					}
+                }
+            });
+            var app = new Vue({
+                el:'#app'
+            });
+            /*
+            기본적으로 데이터는 부모에서 자식으로 향하는 단방향 데이터 흐름을 가지고 있음. 위 예제는 자식 컴포넌트에서 부모의 데이터를 수정하는 예제.
+            자식은 1번에 500칼로리 섭취하지만 부모는 1번에 800칼로리를 섭취. 각각 부모와 자식은 칼로리라는 데이터를 가지고 있으며 자식이 밥을 먹을때만 부모도 함께 먹음.
+            밥을 먹는 이벤트를 발생시키는 트리거(버튼)는 자식이 가지고 있음. 이 트리거는 childEat라는 메서드를 실행.
+            이 메서드는 자식의 칼로리를 500 증가시켜주며 $emit()을 사용하여 eat이라는 이벤트를 발생. eat은 child 컴포넌트를 사용하는 부분에서 볼수 있음.
+            @eat="parentEat"이런 식으로.
+            eat이라는 이벤트가 감지(발생)되면 parentEat이라는 메서드를 실행하게 되는 것.
+            이 parentEat은 부모의 칼로리를 800 증가 시켜줌. 이로써 자식 컴포넌트에서 부모의 데이터를 접근 할 수 있게됨.
+             */
+        </script>
+    </body>
+</html>
